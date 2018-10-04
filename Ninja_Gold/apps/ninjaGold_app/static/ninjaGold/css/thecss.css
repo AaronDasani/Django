@@ -1,0 +1,12 @@
+form{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    width: 250px;
+    
+}
+.activities{
+    height: 180px;
+    overflow:scroll;
+    border: 2px dashed black;
+}

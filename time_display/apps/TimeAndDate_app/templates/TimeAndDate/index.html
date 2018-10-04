@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Time And Date</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'TimeAndDate/css/stylesheet.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Current Time and Date</h1>
+
+
+        <div class="clock">
+
+            <p id="Date">{{date}}</p>
+
+            <p id="hours">{{time}}</p>
+
+        </div>
+    </div>
+
+</body>
+</html>

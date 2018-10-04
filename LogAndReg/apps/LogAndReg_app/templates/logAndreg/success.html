@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Success</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+    
+    <h1 class="mt-5 ml-4">Success! Welcome {{user.first_name}}</h1>
+    {% if messages %}
+        <ul class=" list-inline messages text-{{request.session.color}}">
+        {% for message in messages %}
+            <li{% if message.tags %} class="ml-4 {{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{%url 'home:registration'%}" class="btn btn-lg btn-dark mt-4 ml-5">Back</a>
+    <a href="{%url 'home:login'%}" class="btn btn-lg btn-dark mt-4 ml-5">To Login</a>
+
+</body>
+</html>

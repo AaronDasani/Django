@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Survey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body class=" bg-dark text-white">
+    
+    <div class="container">
+        <div>
+            <form class="mt-5" action="/process" method="post">
+
+                {% csrf_token %}
+
+                <div class="col-md-5 mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="" value="" required>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="location">Dojo Location</label>
+                    <select class="custom-select d-block w-100 " name="location" id="location" required>
+                      <option value="">Choose...</option>
+                      <option>Silicon Valley,CA</option>
+                      <option>Seattle WA</option>
+                      <option>Los Angeles,CA</option>
+                      <option>Dallas,TX</option>
+                      <option>Chicago IL</option>
+                      <option>Tulsa OK</option>
+                    </select>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="language">Favorite Langauge</label>
+                    <select class="custom-select d-block w-100" name="language"id="language" required>
+                      <option value="">Choose...</option>
+                      <option>Python</option>
+                      <option>JavaScript</option>
+                      <option>Ruby</option>
+                      <option>PHP</option>
+                      <option>C++</option>
+                      <option>Objective-C</option>
+                    </select>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="textarea">Comment</label>
+                    <textarea class="form-control  mb-3" name="comment" id="textarea" rows="4"></textarea>
+                </div>
+                <button type='submit' class="btn btn-lg btn-primary ml-3">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

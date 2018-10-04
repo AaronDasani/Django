@@ -1,0 +1,37 @@
+{%extends "user_crud/layout.html"%}
+
+<title>Index</title>
+{%block content%}
+
+
+    <h1>Users</h1>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Created_at</th>
+            <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for index in users  %}
+                <tr>
+                    <th scope="row">{{index.id}}</th>
+                    <td><a href="{%url 'users:profile' user_id=index.id%}">{{index.name}}</a></td>
+                    <td>{{index.email}}</td>
+                    <td>{{index.created_at}}</td>
+                    <td><a href="{%url 'users:profile' user_id=index.id%}">Show</a> <a href="{%url 'users:edit' user_id=index.id%}">Edit</a> <a href="{%url 'users:delete' user_id=index.id%}">Delete</a></td>
+                </tr>
+            {% endfor %}
+
+           
+            
+        </tbody>
+    </table>
+    <a href="{%url 'users:new'%}">Add a new User</a>
+
+
+{%endblock content%}

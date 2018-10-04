@@ -1,0 +1,46 @@
+
+<title>Edit</title>
+<style>
+    .errors{
+        color: red;
+        list-style: none;
+    }
+</style>
+{%extends "user_crud/layout.html"%}
+
+
+{%block content%}
+
+
+<h1 class="mt-5">Edit User {{current_user}}</h1>
+
+<form class="form-signin mt-5 col-5"  method="post" action="{%url 'users:update' user_id=current_user%}">
+    {%csrf_token%}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} errors"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="form-label-group mb-4">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name='name' class="form-control" placeholder="Full Name" >
+            
+    </div>
+
+    <div class="form-label-group mb-4">
+        <label for="inputEmail">Email address</label>
+        <input type="text" id="inputEmail" name='email' class="form-control" placeholder="Email address">
+        
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+    <a href="{%url 'users:profile' user_id=current_user%}" class=" mt-3 btn btn-small btn-success">Show</a>
+    <a href="{%url 'users:index'%}" class=" mt-3 btn btn-small btn-dark">Go Back</a>
+
+
+</form>
+
+
+
+{%endblock content%}

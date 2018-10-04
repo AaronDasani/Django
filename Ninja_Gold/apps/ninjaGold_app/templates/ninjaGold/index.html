@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Money</title>
+    {%load static%}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'ninjaGold/css/thecss.css' %}">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <h3 class="mt-5 mb-5">Your Gold: <span>{{request.session.total}}</span></h3>
+        <form action="/process/1" method='post'>
+            {% csrf_token %}
+            <div class="card-deck mb-3 text-center box">
+            
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Farm</h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        <h4 class="card-title pricing-card-title text-white">Earns 10 - 20 gold</h4>
+                        <input type="hidden" name="location" value="farm">
+                        <button type="submit" class="btn btn-lg btn-block btn-warning mt-5 ">Find Gold!!</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="/process/2" method='post'>
+            {% csrf_token %}
+            <div class="card-deck mb-3 text-center box">
+            
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Cave</h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        <h4 class="card-title pricing-card-title text-white">Earns 5 - 10 gold</h4>
+                        <input type="hidden" name="location" value="cave">
+                        <button type="submit" class="btn btn-lg btn-block btn-warning mt-5 ">Find Gold!!</button>
+                    </div>
+                </div>  
+            </div>
+        </form>
+        <form action="/process/3" method='post'>
+            {% csrf_token %}
+            <div class="card-deck mb-3 text-center box">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">House</h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        <h4 class="card-title pricing-card-title text-white">Earns 2 - 5 gold</h4>
+                        <input type="hidden" name="location" value="house">
+                        <button type="submit" class="btn btn-lg btn-block btn-warning mt-5 ">Find Gold!!</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="/process/4" method='post'>
+            {% csrf_token %}
+            <div class="card-deck mb-3 text-center box">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Casino</h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        <h4 class="card-title pricing-card-title text-white">Earns/Takes 0 - 50 gold</h4>
+                        <input type="hidden" name="location" value="casino">
+                        <button type="submit" class="btn btn-lg btn-block btn-warning mt-4 ">Find Gold!!</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+       <!-- Activities Section -->
+       <h6 class="font-weight-light">Activities:</h6>
+       <div class="activities">
+            {%for index in request.session.history reversed%}
+                {%if index.gold >= 0 %}
+                <p class="text-success ml-2">Earned {{index.gold}} gold from the {{index.location}}! ({{index.time}})</p>
+                {%else%}               
+                
+                <p class="text-danger ml-2">Earned {{index.gold}} gold from the {{index.location}}! ({{index.time}})</p>
+                {%endif%}
+            {%endfor%}
+       </div>
+
+    </div>
+
+
+
+
+</body>
+</html>

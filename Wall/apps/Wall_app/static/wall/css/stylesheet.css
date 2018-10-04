@@ -1,0 +1,19 @@
+.background{
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    background-attachment:fixed;
+    
+}
+.container{
+    box-shadow: 5px 3px 15px rgb(34, 34, 34);
+    padding: 0px;
+    padding-bottom: 150px;
+}
+body{
+    background-color: rgb(70, 70, 70);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    background-attachment:fixed;
+}

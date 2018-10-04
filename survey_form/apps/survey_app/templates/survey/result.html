@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container bg-white">
+
+        <div class="bg-success p-3 mt-5 mb-4">
+            <p>Thanks for submitting this form! You have submitted this form {{request.session.counter}} times now</p>
+        </div>
+        <div class="bg-dark text-white">
+            <h4 class=" pt-2 text-center">Submitted Information</h4>
+            
+            <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row"></th>
+                    <td>Name:</td>
+                    <td>{{request.session.user_data.name}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row"></th>
+                    <td>Dojo Location:</td>
+                    <td>{{request.session.user_data.location}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row"></th>
+                    <td>Favorite Language:</td>
+                    <td>{{request.session.user_data.language}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"></th>
+                    <td>Comment</td>
+                    <td>{{request.session.user_data.comment}}</td>
+                  </tr>
+                </tbody>
+            </table>
+            <form action="/" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-lg btn-primary ml-5 mb-2">Go back</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

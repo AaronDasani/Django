@@ -1,0 +1,24 @@
+Dojo.objects.create(name='CodingDojo Seattle',city='Seattle',state='CA',desc='asdasd')
+Dojo.objects.create(name='CodingDojo Silicon Valley',city='Mountain View',state='CA',desc='asdasd')
+Dojo.objects.create(name='CodingDojo New York',city=' New York',state='NY',desc='asdasd')
+
+Dojo.objects.all().delete()
+
+Dojo.objects.create(name='CodingDojo Seattle',city='Seattle',state='CA',desc='asdasd')
+Dojo.objects.create(name='CodingDojo Silicon Valley',city='Mountain View',state='CA',desc='asdasd')
+Dojo.objects.create(name='CodingDojo New York',city=' New York',state='NY',desc='asdasd')
+
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='aaronnnn',last_name='okokokkokoko')
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='ezekiel',last_name='game')
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='janenne',last_name='onlord')
+
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='basket',last_name='computer')
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='pencil',last_name='medal')
+Ninja.objects.create(dojo=Dojo.objects.first(),first_name='eraser',last_name='cup')
+
+Ninja.objects.create(dojo=Dojo.objects.last(),first_name='zane',last_name='please')
+Ninja.objects.create(dojo=Dojo.objects.last(),first_name='blane',last_name='janey')
+Ninja.objects.create(dojo=Dojo.objects.last(),first_name='pain',last_name='writing')
+
+Dojo.objects.first().ninja.all().values()
+Dojo.objects.last().ninja.all().values()

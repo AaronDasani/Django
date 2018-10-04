@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Courses</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+
+        <h3 class="mt-5 bg-dark text-white p-2">Add a new course</h3>
+        {% if messages %}
+            <ul class="messages text-{{request.session.color}} list-inline">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="ml-3 {{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="{%url 'course:create' %}" method="post" class="col-5 mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name"> Name:</label>
+                <input type="text" id='name' name="name">
+            </div>
+        
+            <div class="form-group">    
+                <label for="desc"> Description:</label>
+                <textarea type="text" class="form-control" id='desc' name="desc" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-lg btn-success"> Create</button>
+        </form>
+
+        <div class="mt-5">
+            <h4>Courses</h4>
+            
+            <table class="table table-striped table-dark mt-3  table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date Added</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index in course  %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{index.name}}</td>
+                            <td>{{index.description.desc}}</td>
+                            <td>{{index.created_at}}</td>
+                            <td><a href="{%url 'course:destroy' course_id=index.id%}">Remove</a>  <a href="{%url 'course:comment' course_id=index.id%}" class="ml-2">Comment</a></td>
+    
+                        </tr>
+                    {% endfor %}
+                   
+                   
+                </tbody>
+            </table>
+        
+        </div>
+
+
+
+    </div>
+   
+</body>
+</html>

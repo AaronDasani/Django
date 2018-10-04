@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>session Words</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .leftsecttion{
+            border-right: 3px solid black;
+        }
+        .button{
+            text-align: end;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container bg-dark text-white">
+        <div class="row">
+            <div class="leftsecttion col-md-6 order-md-1 mt-4 ">
+                <h1>Add a new word</h1>
+                <form action="/process" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="word" id="word">
+
+                    <h5 class="mt-4">Choose a color</h5>
+                    <div class="custom-control custom-radio">
+                        <input id="red" name="color" value="danger" type="radio" class="custom-control-input" checked required>
+                        <label class="custom-control-label" for="red">Red</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="blue" name="color" value="primary" type="radio" class="custom-control-input"  required>
+                        <label class="custom-control-label" for="blue">Blue</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="green" name="color" value="success" type="radio" class="custom-control-input"  required>
+                        <label class="custom-control-label" for="green">Green</label>
+                    </div>
+
+                    <div class="form-check mt-3 mb-3">
+                        <input class="form-check-input" name="fonts" type="checkbox" value="bigfont" id="checkbox">
+                        <label class="form-check-label" for="defaultCheck2">Show in BIG fonts!!</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-primary mb-3">Add to Session</button>
+                </form>
+            </div>
+            <div class="col-md-6 order-md-2 mb-4 mt-4">
+                <div class="button">
+                    <a href="/delete" class="btn btn-lg btn-danger"> Clear Session</a>
+                    
+                </div>
+                {%for index in request.session.data%}
+                    
+                    <p class="mt-3 text-{{index.color}}" style="font-size:{{index.fonts}}px;">{{index.word}}<span style="font-size: 15px;" class="text-white"> - added on {{index.time}}, {{index.date}}</span></p>
+                    
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

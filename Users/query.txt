@@ -1,0 +1,11 @@
+User.objects.all()
+User.objects.last()
+User.objects.create(first_name='zane',last_name='blooop',email_address='zane@yahoo.com',age=45)
+User.objects.first()
+User.objects.order_by('first_name')
+
+b=User.objects.get(id=3)
+b.last_name='lolololololo'
+b.save()
+
+User.objects.get(id=4).delete()

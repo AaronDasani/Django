@@ -1,0 +1,16 @@
+{%extends "user_crud/layout.html"%}
+
+
+{%block content%}
+
+<h1 class="mt-5">User {{current_user.id}}</h1><a class="btn btn-sm btn-success"href="{%url 'users:index'%}"> Go Back</a>
+
+<p>Full Name: {{current_user.name}}</p>
+<p>Eamil: {{current_user.email}}</p>
+<p>Created at: {{current_user.created_at}}</p>
+<a href="{%url 'users:edit' user_id=current_user.id %}">Edit</a>
+<a href="{%url 'users:delete' user_id=current_user.id %}">Delete</a>
+
+
+
+{%endblock content%}

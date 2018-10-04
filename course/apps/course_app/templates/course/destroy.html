@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Delete a Course</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body class="text-center bg-dark text-white">
+    <div class="container">
+
+        <h3 class="mt-5">Are you sure you want to delete the following course</h3>
+        <p>Name: <span>{{current_course.name}}</span></p>
+
+        <p>Description: <span>{{current_course.description.desc}}</span></p>
+
+        <a href="{%url 'course:index'%}" class="btn btn-sm btn-primary pr-3 pl-3">No</a> <a href="{%url 'course:delete' course_id=course_id%}" class=" ml-4 btn btn-sm btn-danger">Yes! I want to delete this</a>
+    </div>
+</body>
+</html>
