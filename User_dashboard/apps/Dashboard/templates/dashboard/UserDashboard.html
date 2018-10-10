@@ -1,0 +1,52 @@
+<title>Dashboard</title>
+{%extends "dashboard/dashLayout.html"%}
+
+{%block content%}
+    <div class="container">
+        <h2 class="font-weight-light mt-4 text-center"> Hello <small class="font-weight-light">{{user.first_name}} !!</small></h2>
+        {% if messages %}
+            <ul class=" list-inline messages text-success">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h4 class="mt-5 col-3 d-inline-block subTitle"> <i class="fas fa-users"></i> All Users</h4>
+
+        <table class="table table-hover table-striped  mt-3 text-center">
+            <thead class="thead-light ">
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created_at</th>
+                <th scope="col">User_level</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                {%for index in all_user%}
+
+                    <tr>
+                        <th scope="row">{{index.id}}</th>
+                        <td><a href="{%url 'wall:index' currentPage=index.id%}">{{index.first_name}} {{index.last_name}}</a></td>
+                        <td>{{index.email}}</td>
+                        <td>{{index.created_at}}</td>
+                        {%ifequal index.user_level 1%}
+                            <td class="text-success">Admin</td>
+                        {%else%}
+                            <td>Normal User</td>
+                        {%endifequal%}
+                    
+                    </tr>
+
+                {%endfor%}
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+{%endblock content%}

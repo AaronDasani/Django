@@ -1,0 +1,175 @@
+
+<title>Pofile</title>
+{%extends "dashboard/dashLayout.html"%}
+
+
+{% block content %}
+    {% load static %}
+    <script src="{%static 'message/script/jquery.js' %}"></script>
+    <link rel="stylesheet" href="{%static 'message/css/stylesheet.css'%}">
+
+    <div class="container bg-light mt-4">
+        <div class="py-5 text-center background text-white " style="background-image: url('{%static "message/image/profileBG.jpg"%}');">
+            <div class="row profileHeader">
+                <div class="col-2 profilepic">
+                    <img class="d-block mx-auto mb-2 rounded-circle" src="{%static 'message/image/profilePic.jpg' %}" alt="profile pic" width="120" height="125">
+                    
+                    <small class="d-block"><i class="fas fa-birthday-cake "></i> {{user.birthday}}</small>
+                    <small class="d-block ml-4 mt-2 emaildisplay"><i class="fas fa-at"></i> {{user.email}}</small>
+
+                    <!-- User edit Button -->
+                    {% ifequal user.id request.session.user_id %}
+                        <button data-toggle="modal" data-target="#edit" class="btn btn-warning mt-3"><i class="fas fa-user-edit"></i></button>
+                    {% endifequal %}
+
+                </div>
+                <div class="col-8 profileDesc">
+                    <h2>{{user.first_name}} {{user.last_name}}</h2>
+                    <hr>
+                    <lead class="lead">{{user.description}}</lead>
+                </div>
+            </div>
+            
+        </div>
+    
+        {% if messages %}
+            <ul class=" list-inline messages text-danger ml-3 mt-3">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }} ml-2"{% endif %}><small>{{message }}</small> </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="mt-4 ml-4">
+            <div class="form-group">
+                <form action="{% url 'wall:create' currentPage=user.id%}" method="post">
+                    {% csrf_token %}
+                    <label for="post">Post a message</label>
+                    <textarea class="form-control col-8" id="post" name="post" rows="5"></textarea>
+                    <div class="row justify-content-end col-8"><button type="submit" class="btn btn-success mt-2 pl-4 pr-4">Post</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="PostSection ml-4 ">
+            {% for index in post %}
+                {% comment %} Main Post {% endcomment %}
+                <div class="mt-4">
+                    <small class="font-weight-bold">{{index.user.first_name}} {{index.user.last_name}} - {{index.created_at}}</small>
+                    <!-- delete Button functionality -->
+                    <form action="{%url 'wall:destroy' user_id=index.user.id currentPage=user.id%}" method="post" class="d-inline-block">
+                        {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{index.id}}">
+                        <button type="submit" class="btn btn-sm btn-light pt-0 pb-0 text-danger" style="{{index.deleteButton}};">Delete</button>
+                    </form>
+                </div>
+                <p class="ml-2 mb-0">{{index.content}}</p>
+                <button class="viewButton btn btn-sm btn-light font-weight-light pt-0 pb-0">View Comments</button>
+                <button class="viewPostElement btn btn-sm btn-light pt-0 pb-0">Reply</button>
+
+                <div class="ml-4 mt-2 replies">
+                   
+                    <div>
+                        {% for comment in index.comments.all %}
+                            <div>
+                                <small class="font-weight-light">{{comment.user.first_name}}{{comment.user.last_name}} - {{comment.created_at}}</small>
+                                <p class="ml-1">{{comment.comment}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% comment %} Post Button {% endcomment %}
+                <form action="{% url 'wall:createComment' post_id=index.id currentPage=user.id%}" method="post" class="ml-3 mt-3 postCom">
+                    {% csrf_token %}
+                    <label class="font-weight-light" for="comment">Post a comment</label>
+                    <textarea class="form-control col-5" id="comment" name="comment" rows="2"></textarea>
+                    <div class="row justify-content-end col-5 ml-2"><button type="submit" class="btn btn-sm btn-primary mt-2 ">Comment</button></div>
+                </form>
+
+            {% endfor %}
+        </div>
+    
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <div class="modalHeader text-center">
+                        <button class=" btn btn-light" id="editButton">Edit Information</button>
+                        <button class=" btn btn-light ml-2" id="passswordButton">Change Password</button>
+                    </div>
+                    <button type="button" class="close closebutton ml-1" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="editInfoSection">
+                            <h6 class="mb-3 bg-dark text-white p-2 shadow">Edit Information</h6>
+                            <form class="needs-validation" action="{%url 'dashboard:update' user_id=user.id%}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName">First name</label>
+                                        <input type="text" class="form-control " id="firstName" name="first_name" value="" placeholder="{{user.first_name}}...">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName">Last name</label>
+                                        <input type="text" class="form-control" id="lastName" name="last_name" placeholder="{{user.last_name}}..">
+            
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" name="email" id="email" placeholder="you@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                </div>
+
+                                <hr class="mb-4">
+                                <input type="hidden" name="editRequest" id="user_id" value="fromUser">
+                                <div class="text-right">
+                                    <button class="btn btn-success shadow" type="submit">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="editPasswordSection">
+            
+                            <h6 class=" mb-3 bg-dark text-white p-2 shadow">Change Password</h6>
+                            <form class="needs-validation" action="{%url 'dashboard:update' user_id=user.id%}" method="post">
+                                {% csrf_token %}
+                
+                                <div class="mb-3 ">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" class="form-control" name="confirmpassword" id="confirmPassword" placeholder="confirm password">
+                                </div>
+                                <input type="hidden" name="editRequest" id="user_id" value="fromUser">
+                                <hr class="mb-4">
+                                <div class="text-right">
+                                    <button class="btn btn-success shadow" type="submit">Update Password</button>
+                                </div>
+                
+                            </form>
+                            
+                                
+                        </div>
+                    </div>
+                   
+                    
+      
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{%endblock content%}

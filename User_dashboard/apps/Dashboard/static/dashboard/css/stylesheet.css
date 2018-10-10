@@ -1,0 +1,17 @@
+.container{
+    width: 100%;
+}
+.actionbutton{
+    width: 200px;
+}
+.shadow{
+    box-shadow: 2px 2px 3px rgb(43, 43, 43);
+}
+.createUserContainer{
+    width: 50%;
+}
+.leftsection{
+    border-right: 2px solid grey;
+    padding-right: 25px !important;
+    
+}

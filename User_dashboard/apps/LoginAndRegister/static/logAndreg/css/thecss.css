@@ -1,0 +1,17 @@
+
+
+.backgroundIMG{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background:fixed;
+}
+
+.jumbotron{
+    height: 500px;
+    padding-bottom: 70px;
+}
+nav{
+    border-bottom: 1px solid white;
+    
+}

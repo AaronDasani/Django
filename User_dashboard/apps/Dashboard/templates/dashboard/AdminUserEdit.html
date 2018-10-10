@@ -1,0 +1,86 @@
+
+<title>Edit User</title>
+{%extends "dashboard/dashLayout.html"%}
+
+
+{% block content %}
+    <div class="container">
+        <h3 class="mt-4 d-inline-block col-6"> <i class="fas fa-user-edit mr-2"></i><small>{{user.first_name}} {{user.last_name}}</small></h3>
+        <div class="col-5 d-inline-block text-right ml-4"><a href="{%url 'dashboard:Dashboard'%}" class=" btn btn-primary shadow"> Return to Dashboard</a></div>
+    
+        {% if messages %}
+            <ul class=" list-inline messages text-danger">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="row">
+            <div class="leftsection col-6">
+                <div class="mt-4">
+                    <h6 class="mb-3 bg-dark text-white p-2 shadow">Edit Information</h6>
+
+
+                    <form class="needs-validation" action="{%url 'dashboard:update' user_id=user.id%}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">First name</label>
+                                <input type="text" class="form-control " id="firstName" name="first_name" value="" placeholder="{{user.first_name}}...">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName">Last name</label>
+                                <input type="text" class="form-control" id="lastName" name="last_name" placeholder="{{user.last_name}}..">
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="you@example.com">
+                        </div>
+                        <div class="mb-3">
+                                <label for="user_level">User Level</label>
+                                <select class="custom-select" id="user_level" name="user_level">
+                                    <option selected value="-1">Choose...</option>
+                                    <option value="0">Normal</option>
+                                    <option value="1">Admin</option>
+                                </select>
+                        </div>
+                        <input type="hidden" name="editRequest" id="user_id" value="fromAdmin">
+                        <hr class="mb-4">
+                        <div class="text-right">
+                            <button class="btn btn-success shadow" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="rightsection col-5 mt-4 ml-3">
+                
+                <h6 class=" mb-3 bg-dark text-white p-2 shadow">Change Password</h6>
+                <form class="needs-validation" action="{%url 'dashboard:update' user_id=user.id%}" method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3 ">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="password">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="confirmpassword" id="confirmPassword" placeholder="confirm password">
+                    </div>
+                    <input type="hidden" name="editRequest" id="user_id" value="fromAdmin">
+                    <hr class="mb-4">
+                    <div class="text-right">
+                        <button class="btn btn-success shadow" type="submit">Update Password</button>
+                    </div>
+
+                </form>
+                
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}
