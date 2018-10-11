@@ -28,11 +28,10 @@ def create(request):
         # As we are using the same create function, we check if the user is an Admin, if yes, this mean that the user is being created by the Admin....
         if 'user_id' in request.session:
             if User.objects.get(id=request.session['user_id']).user_level==1:
-                print("this is the Admin<<<<<----------")
                 return redirect(reverse("dashboard:addUser"))
 
         # if the above if statement is false, this mean that the user being created is a new user
-        print("User registration<<<<<<<<<-------------")
+
         request.session['user_id']=response
         messages.success(request, "Successfully Registered")
         return redirect(reverse("dashboard:Dashboard"))

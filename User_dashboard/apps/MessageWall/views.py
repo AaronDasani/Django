@@ -47,7 +47,7 @@ def create(request,currentPage):
         return redirect(reverse('wall:index',kwargs={'currentPage': currentPage }))
         
     # create the post
-    Post.objects.create(content=request.POST['post'],location=currentPage,deleteButton="null",recipient=User.objects.get(id=currentPage), user=User.objects.get(id=request.session['user_id']))
+    Post.objects.create(content=request.POST['post'],deleteButton="null",recipient=User.objects.get(id=currentPage), user=User.objects.get(id=request.session['user_id']))
     return redirect(reverse('wall:index',kwargs={'currentPage': currentPage }))
 
 
