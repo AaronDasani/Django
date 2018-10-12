@@ -1,0 +1,145 @@
+
+{%extends "bookreviewer/layout.html"%}
+<title>Books Home</title>
+   
+{%block content%}
+
+    <header class="blog-header py-3 bg-dark">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-4 pt-1 ml-5">
+                <h4 class="text-white"> <i class="fas fa-book-reader mr-2"></i>Welcome, {{user}} </h4>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <a class="btn btn btn-outline-primary ml-2 mr-3" href="{%url 'books:userProfile' user_id=request.session.user_id%}"><i class="fas fa-user-circle"></i></a>
+                <button  data-toggle="modal" data-target="#createButton" class="btn btn-sm btn-outline-warning">Add Book and Review</button>
+                <a class="btn btn-sm btn-outline-danger ml-2 mr-3" href="{%url 'userLG:logoff'%}">Log out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+       
+       <div class="row">
+            <div class="leftSection col-7 mt-5">
+                {% if messages %}
+                    <ul class="messages list-inline text-{{request.session.color}}">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="ml-4 {{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <div>
+                    <h6 class="bg-info p-2 text-white shadow">Recent Book Reviews:</h6>
+                    <hr>
+
+                    {% for index in books  %}
+
+                        {% if forloop.counter < 4 %}
+                            <div>
+                                <h6><a href="{%url 'books:bookProfile' book_id=index.id%}">{{index.title}}</a></h6>
+                                <small class="ml-2">Rating: {{index.book_reviews.last.rating}} <i class="fas fa-star"></i></small>
+                                <p class="ml-2 font-weight-light mb-0"><a href="{%url 'books:userProfile' user_id=index.user_id%}">{{index.book_reviews.last.user.first_name}}</a> says: {{index.book_reviews.last.review}}</p>
+                                <small class="ml-2"> Posted on the {{index.book_reviews.last.created_at}}</small>
+                                <hr>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                    
+                </div>
+            </div>
+
+            <div class="rightSection col-5 mt-5">
+                <h6>Other Books with Reviews:</h6>
+                <div class="otherbooks border border-info rounded ">
+                    <ul class="booklinks">
+                        {% for index in books  %}
+                            <li><a href="{%url 'books:bookProfile' book_id=index.id%}">{{index.title}}</a></li>
+                        {% endfor %}
+                        
+                        
+
+                    </ul>
+                </div>
+            
+            </div>
+       </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="createButton" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <div class="modalHeader text-center">
+                            <h5>Add Book and Reviews</h5>
+                        </div>
+                        <button type="button" class="close closebutton ml-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+
+                            <form class="needs-validation" action="{%url 'books:create'%}" method="post">
+                                {% csrf_token %}
+    
+                                <div class="mb-3">
+                                    <label for="firstName">Book Title:</label>
+                                    <input type="text" class="form-control " id="bookTitle" name="bookTitle" value="" placeholder="Title">
+                                </div>
+                                <div class="mb-3">
+                                    <h6>Author:</h6>
+                                    <div class="input-group mb-3 ml-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="author">Author</label>
+                                        </div>
+                                        <select class="custom-select" id="author" name="author">
+                                            <option value="" selected>Choose...</option>
+                                            <option value="Aaron Dasani">Aaron Dasani</option>
+                                            <option value="Lavinia Smith">Lavinia Smith</option>
+                                            <option value="Jake Burn">Jake Burn</option>
+                                        </select>   
+                                    </div>
+                                    <small class="ml-3"> Or add a new author:</small>
+                                    <input type="text" class="form-control ml-2" name="typeAuthor" placeholder="Author name">
+                                
+        
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="review">Review</label>
+                                    <textarea class="form-control" name="review" id="review" rows="3"></textarea>
+                                </div>
+                                <div>
+                                    <label for="rating"> Rating:</label>
+                                    <select id="rating" name="rating">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+
+                                <hr class="mb-4">
+                                <!-- <input type="hidden" name="editRequest" id="user_id" value="fromUser"> -->
+                                <div class="text-right">
+                                    <button class="btn btn-warning shadow" type="submit">Add Book and Review</button>
+                                </div>
+                            </form>
+                        </div>
+    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            
+    </div>
+
+
+{%endblock content%}
+
+

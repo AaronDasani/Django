@@ -1,0 +1,78 @@
+
+{%extends "bookreviewer/layout.html"%}
+
+
+{%block content%}
+    <header class="blog-header py-3 bg-dark">
+
+        <div class="text-right">
+            <a class="btn btn-sm btn-outline-info ml-2 mr-2" href="{%url 'books:dashboard'%}">Dashboard</a>
+            <a class="btn btn-sm btn-outline-danger ml-2 mr-3" href="{%url 'userLG:logoff'%}">Log out</a>
+        </div>
+
+    </header>
+    <div class="bookcontainer container mt-5">
+        <div class="bg-dark text-white py-3 pl-2 text-center shadow">
+            <h5>{{book.title}}</h5>
+            <small class="font-weight-light">Author: {{book.author}}</small>
+        </div>
+        <div class="mt-5 reviewSection">
+            <div class="row">
+                <h6 class="col-10">Reviews:</h6>
+                <button class="btn btn-outline-dark btn-sm " id="addReview"> Add Review</button>
+            </div>
+            <hr>
+            <div class="reviewForm">
+                <form action="{%url 'books:addReview' book_id=book.id%}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group ">
+                        <label for="review">Review</label>
+                        <textarea class="form-control col-7" name="review" id="review" rows="3"></textarea>
+                    </div>
+                    <div>
+                        <label for="rating"> Rating:</label>
+                        <select id="rating" name="rating">
+                            <option value="" selected>Choose...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="text-right">
+                        <button class="btn btn-outline-success btn-sm shadow " type="submit">Submit Review</button>
+                    </div>
+                </form>
+                <hr class="mb-4">
+            </div>
+
+
+
+
+
+            <div class="">
+                {% for index in book.book_reviews.all reversed%}
+                    <div class="ml-3">
+                        <form action="{%url 'books:deleteReview' review_id=index.id book_id=book.id%}" method="post">
+                            {% csrf_token %}
+                            <small>Rating: {{index.rating}}</small>
+                            <p class="font-weight-light mb-0"><a href="{%url 'books:userProfile' user_id=index.user_id%}"> {{index.user.first_name}}</a> says: {{index.review}}</p>
+                            <small>Posted on {{index.created_at}}</small> 
+                            {% ifequal request.session.user_id index.user_id %}
+                                <small><button type="submit" class="ml-5 btn btn-sm btn-outline-secondary">Delete this Review </button></small> 
+                            {% endifequal %}
+                           
+                        </form>
+                    </div>
+                    <hr>
+                {% endfor %}
+            
+            </div>
+        </div>
+    </div>
+
+
+
+{%endblock content%}

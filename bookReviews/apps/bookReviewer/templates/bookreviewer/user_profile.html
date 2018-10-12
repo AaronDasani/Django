@@ -1,0 +1,116 @@
+
+{%extends "bookreviewer/layout.html"%}
+
+
+{%block content%}
+    {%load static%}
+    <header class="blog-header py-3 bg-dark">
+
+        <div class="text-right">
+            <a class="btn btn-sm btn-outline-info ml-2 mr-3" href="{%url 'books:dashboard'%}">Dashboard</a>
+            <button  data-toggle="modal" data-target="#createButton" class="btn btn-sm btn-outline-warning">Add Book and Review</button>
+            <a class="btn btn-sm btn-outline-danger ml-2 mr-3" href="{%url 'userLG:logoff'%}">Log out</a>
+        </div>
+
+    </header>
+
+    <div class="container mt-5">
+
+        <div class="text-white shadow p-3 row usercontainer" style="background-image:url({%static 'bookreviewer/image/book.jpeg'%})">
+            <div class="col-4 mt-4"> 
+                <img class="rounded-circle mb-3 shadow-lg" src="{%static 'bookreviewer/image/funnyPic.jpg'%}" alt="profile picture" width="120px" height="110px">
+                <h6>{{user.first_name}} {{user.last_name}}</h6>
+                <h6><i class="fas fa-at mr-1"></i>{{user.email}}</h6>
+                <h6 class="text-warning">Total Reviews: {{user.review.count}}</h6>
+            </div>
+            <h2 class="col-4 text-center mt-4 ">Hello <small>{{user.nickname}} !!</small></h2>
+
+        </div>
+
+        <div class="mt-5">
+            <h5 class="bg-dark p-2 text-white">Posted Reviews on the following books:</h5>
+            <ul>
+                {% for index in book_reviewed %}
+         
+                    <li><i class="fas fa-book mr-2"></i><a href="{%url 'books:bookProfile' book_id=index.book.id%}" class="text-dark">{{index.book.title}}</a></li>
+                {% endfor %}
+                
+            </ul>
+
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="createButton" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <div class="modalHeader text-center">
+                            <h5>Add Book and Reviews</h5>
+                        </div>
+                        <button type="button" class="close closebutton ml-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+
+                            <form class="needs-validation" action="{%url 'books:create'%}" method="post">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label for="firstName">Book Title:</label>
+                                    <input type="text" class="form-control " id="bookTitle" name="bookTitle" value="" placeholder="Title">
+                                </div>
+                                <div class="mb-3">
+                                    <h6>Author:</h6>
+                                    <div class="input-group mb-3 ml-2">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="author">Author</label>
+                                        </div>
+                                        <select class="custom-select" id="author" name="author">
+                                            <option value="" selected>Choose...</option>
+                                            <option value="Aaron Dasani">Aaron Dasani</option>
+                                            <option value="Lavinia Smith">Lavinia Smith</option>
+                                            <option value="Jake Burn">Jake Burn</option>
+                                        </select>   
+                                    </div>
+                                    <small class="ml-3"> Or add a new author:</small>
+                                    <input type="text" class="form-control ml-2" name="typeAuthor" placeholder="Author name">
+                                
+        
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="review">Review</label>
+                                    <textarea class="form-control" name="review" id="review" rows="3"></textarea>
+                                </div>
+                                <div>
+                                    <label for="rating"> Rating:</label>
+                                    <select id="rating" name="rating">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+
+                                <hr class="mb-4">
+                                <div class="text-right">
+                                    <button class="btn btn-warning shadow" type="submit">Add Book and Review</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock content%}
