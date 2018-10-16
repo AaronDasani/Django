@@ -7,14 +7,14 @@
     <script src="{%static 'dashboard/script/jquery.js' %}"></script>
     <div class="container">
         {% if messages %}
-            <ul class=" list-inline messages text-danger">
+            <ul class=" list-inline messages text-success mt-4 ml-3 font-weight-light">
             {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
             </ul>
         {% endif %}
     
-        <h4 class="mt-5 col-3 d-inline-block subTitle"> <i class="fas fa-users"></i> Manage Users</h4>
+        <h4 class="mt-5 col-3 d-inline-block subTitle "> <i class="fas fa-users"></i> Manage Users</h4>
         <div class="d-inline-block col-8 text-right ml-5">
             <a href="{%url 'dashboard:addUser'%}" class="btn btn-success shadow adduser">Add new User <i class="fas fa-user-plus"></i></a>
         </div>

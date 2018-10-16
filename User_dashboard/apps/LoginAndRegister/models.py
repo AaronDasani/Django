@@ -9,6 +9,7 @@ NumericValue_REGEX=re.compile(r'^(?=.*?[0-9])')
 
 date_REGEX=re.compile(r'^(196[0-9]|197[0-9]|198[0-9]|199[0-9])[-](0?[1-9]|1[012])[-](0?[1-9]|[12][0-9]|3[01])$')
 
+
 # Create your models here.
 class UserManager(models.Manager):
     def validator(self,form):

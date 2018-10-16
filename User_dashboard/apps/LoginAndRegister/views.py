@@ -40,6 +40,7 @@ def create(request):
     
 
 def login(request):
+    
 
     return render(request,'logAndreg/login.html')
     
