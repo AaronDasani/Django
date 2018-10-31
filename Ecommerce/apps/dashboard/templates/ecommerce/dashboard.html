@@ -1,0 +1,156 @@
+{%extends "ecommerce/layout.html"%}
+
+{%block head%}
+    <title>Dashboard</title>
+
+{%endblock head%}
+
+
+
+{%block content%}
+    <div class="col-12 text-right mb-4 ">
+        <a  data-toggle="modal" data-target="#Cart" class="mr-2">
+            <h6 class="d-inline badge badge-secondary badge-pill " id="itemAmount">{{itemsInCart}}</h6> <i class="fas fa-shopping-cart "></i>
+        </a>
+        <a href="{%url 'dashboard:checkout'%}" class="btn btn-success font-weight-light mr-3"> Proceed To Checkout</a>
+    </div>
+    <div class="row">
+        <div class="leftsection col-3 bg-light pb-5">
+            <form id="searchForm" action="{%url 'dashboard:searchProduct' category='shirt'%}" method="post">
+                {% csrf_token %}
+                <input class="mt-4" type="text" placeholder="Search" aria-label="Search" name="searchProduct" id="searchProduct">
+                <button type="submit" value='Submit' class="btn btn-outline-primary btn-sm p-0 pt-1 pr-1 ml-2"><i class="fas fa-search ml-2"></i></button>
+                
+            </form>
+            <h6 class="mt-3 bg-dark text-white p-2 mb-2">Catergories</h6>
+            <ul>
+                <li><a class="categoriesSearch" href="{%url 'dashboard:searchProduct' category='shirt'%}">T-shirts</a></li>
+                <li><a class="categoriesSearch" href="{%url 'dashboard:searchProduct' category='shoes'%}">Shoes</a> </li>
+                <li><a class="categoriesSearch" href="{%url 'dashboard:searchProduct' category='socks'%}">Socks</a></li>
+                <li><a class="categoriesSearch" href="{%url 'dashboard:searchProduct' category='shorts'%}">Shorts</a></li>
+                <li><a class="categoriesSearch" href="{%url 'dashboard:searchProduct' category='hoodie'%}">Hoodies</a></li>
+            </ul>
+            <hr>
+            <h6 class="">Filters:</h6>
+            <ul class="pl-1">
+                <li>
+                    <form action="{%url 'dashboard:PriceRange'%}" id="priceRangeForm" method="post">
+                        {% csrf_token %}
+                        <h6 class="font-weight-light">Price Range:</h6>
+                        <p class="ml-2">Max: 
+                            <input type="number" id="maxPrice" name="maxPrice" placeholder="$20"> 
+                            <button type="submit" value='Submit' class="btn btn-outline-success btn-sm p-0 pt-1 pr-1 ml-2"><i class="fas fa-search-dollar"></i></button>
+                        </p>
+                        
+                    </form>
+                </li>
+                <li>
+                    <h6 class="font-weight-light">Brand Name:</h6>
+                    <form id='SearchBrandForm' action="{%url 'dashboard:searchBrand'%}" method="post">
+                        {% csrf_token %}
+                        <p class="ml-2">Brand: <input type="text" id="brandName" name="searchBrand" placeholder="Nike"></p>
+                        <button type="submit" value='Submit' class="btn btn-outline-primary btn-sm p-0 pt-1 pr-1 ml-2"><i class="fas fa-search ml-2"></i></button>
+                    </form>
+                </li>
+                <li></li>
+            </ul>
+        
+        </div>
+
+
+
+        <div class="rightsection col-8 bg-light pb-5 ml-5">
+
+            <div class="productPic">
+                {% for index in product_list %}
+
+                    <div class="box">
+                    <a href="{%url 'dashboard:product_page' product_id=index.product_id product_brand=index.product_brand%}"> <img  class="product" src="{{index.product_image}}" alt="product image"></a>
+                        <div class="overlay">
+                            <div class="bg-dark shadow"><h5>${{index.product_price}}</h5></div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+
+        </div>
+    </div>
+    
+   
+    <script>
+        $('#searchForm').submit(function(e) {
+            e.preventDefault();
+            console.log("search button clicked")
+
+            $.ajax({
+                method: "POST",
+                url: $('#searchForm').attr('action'),
+                data: $('#searchForm').serialize(),
+                success: function(response){
+                    console.log("response is: ", response)
+                    $('.productPic').html(response)
+                }
+                });
+            
+                
+        })
+        
+        $('.categoriesSearch').click(function() {
+         
+            console.log("categories button clicked")
+
+            $.ajax({
+                
+                url: $(this).attr('href'),
+                data: $('.categoriesSearch').serialize(),
+                success: function(response){
+                    console.log("response is: ", response)
+                    $('.productPic').html(response)
+                }
+                });
+            return false
+                
+        })
+
+        $('#priceRangeForm').submit(function(e) {
+            e.preventDefault();
+            console.log("price range button clicked")
+
+            $.ajax({
+                method: "POST",
+                url: $('#priceRangeForm').attr('action'),
+                data: $('#priceRangeForm').serialize(),
+                success: function(response){
+                    console.log("response is: ", response)
+                    $('.productPic').html(response)
+                }
+                });
+            
+                
+        })
+       
+        $('#SearchBrandForm').submit(function(e) {
+            e.preventDefault();
+            console.log("brand search button clicked")
+
+            $.ajax({
+                method: "POST",
+                url: $('#SearchBrandForm').attr('action'),
+                data: $('#SearchBrandForm').serialize(),
+                success: function(response){
+                    console.log("response is: ", response)
+                    $('.productPic').html(response)
+                }
+                });
+            
+                
+        })
+
+        
+    </script>
+
+
+{%endblock content%}

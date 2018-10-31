@@ -1,0 +1,10 @@
+
+{% for index in product_list %}
+
+    <div class="box">
+        <a href="{%url 'dashboard:product_page' product_id=index.product_id product_brand=index.product_brand%}"> <img  class="product" src="{{index.product_image}}" alt="product image"></a>
+        <div class="overlay">
+            <div class="bg-dark shadow"><h5>${{index.product_price}}</h5></div>
+        </div>
+    </div>
+{% endfor %}

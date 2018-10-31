@@ -1,0 +1,23 @@
+
+
+
+
+{% for index in orders %}
+
+    <tr>
+        <th scope="row"><a href="#">{{index.order_id}}</a></th>
+        <td>{{index.user.first_name}} {{index.user.last_name}}</td>
+        <td>{{index.created_at}}</td>
+        <td>20640 65th Dr SE Seattle</td>
+        <td>${{index.totalCost}}</td>
+        <td>
+            <select class="custom-select" id="OrderStatus">
+                <option value="orderIn">Order In</option>
+                <option  value="shipped">Shipped</option>
+                <option value="cancel">Cancelled</option>
+            </select>
+        </td>
+    </tr>
+
+ 
+{% endfor %}
